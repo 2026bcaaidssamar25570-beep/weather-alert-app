@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Disaster Alert App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- टॉप हेडर -->
+        <div class="app-header">
+            <span class="menu-icon">☰</span>
+            <h2 id="city-name">SELECT A CITY</h2>
+            <span class="location-icon" id="gps-btn" style="cursor: pointer;" title="Get Current Location">📍</span>
+        </div>
+
+        <!-- मोबाइल अलर्ट बटन -->
+        <button id="enable-notif-btn" class="notif-btn">🔔 Turn On Mobile Alerts</button>
+        
+        <!-- सर्च बॉक्स -->
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Search city (e.g., Mumbai, Shimla)...">
+            <button id="search-btn">Search</button>
+        </div>
+
+        <!-- ⏱️ सर्च हिस्ट्री बॉक्स -->
+        <div class="recent-searches" id="recent-box">
+            <p class="history-title">🕒 Recent Searches:</p>
+            <div class="history-tags" id="history-tags">
+                <!-- यहाँ पुरानी सर्च हिस्ट्री अपने आप जुड़ती जाएगी -->
+            </div>
+        </div>
+
+        <!-- लाइव अलर्ट बैनर -->
+        <div id="disaster-alert" class="alert-box hidden">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-text">
+                <h3 id="alert-title">EMERGENCY</h3>
+                <p id="alert-desc">Alert details</p>
+            </div>
+        </div>
+
+        <!-- मुख्य मौसम और लाइव आइकॉन -->
+        <div class="main-weather">
+            <div id="weather-icon-box" class="weather-icon">🌙</div>
+            <div class="temp-display"><span id="temperature">--</span>°C</div>
+            <p id="weather-condition">Clear Sky</p>
+        </div>
+
+        <!-- अतिरिक्त जानकारी (Extra Details) -->
+        <div class="details-list">
+            <div class="detail-row"><span>Humidity</span> <span id="humidity">0%</span></div>
+            <div class="detail-row"><span>Chance of rain</span> <span id="rain">0%</span></div>
+            <div class="detail-row"><span>Wind Speed</span> <span id="wind">0 km/h</span></div>
+            <div class="detail-row"><span>Landslide Risk</span> <span id="landslide" class="risk-text">None</span></div>
+            <div class="detail-row"><span>Flood Risk</span> <span id="flood" class="risk-text">Safe</span></div>
+        </div>
+
+        <!-- 7-दिनों का फोरकास्ट ग्राफ -->
+        <div class="forecast-section">
+            <div class="forecast-days-header">
+                <span>FRI</span><span>SAT</span><span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span>
+            </div>
+            <div class="forecast-icons-header">
+                <span>🌙</span><span>❄️</span><span>☁️</span><span>☁️</span><span>⛅</span><span>☁️</span><span>🌧️</span>
+            </div>
+            <div class="graph-container">
+                <div class="bar-wrapper"><span class="top-t">3°</span><div class="bar" style="height: 50px; margin-top: 20px;"></div><span class="bot-t">0°</span></div>
+                <div class="bar-wrapper"><span class="top-t">2°</span><div class="bar" style="height: 40px; margin-top: 30px;"></div><span class="bot-t">0°</span></div>
+                <div class="bar-wrapper"><span class="top-t">4°</span><div class="bar" style="height: 65px; margin-top: 10px;"></div><span class="bot-t">-1°</span></div>
+                <div class="bar-wrapper"><span class="top-t">3°</span><div class="bar" style="height: 55px; margin-top: 15px;"></div><span class="bot-t">-2°</span></div>
+                <div class="bar-wrapper"><span class="top-t">5°</span><div class="bar" style="height: 80px; margin-top: 0px;"></div><span class="bot-t">-2°</span></div>
+                <div class="bar-wrapper"><span class="top-t">-3°</span><div class="bar" style="height: 30px; margin-top: 50px; background: linear-gradient(to bottom, #50a7ff, #1e3c72);"></div><span class="bot-t">-7°</span></div>
+                <div class="bar-wrapper"><span class="top-t">1°</span><div class="bar" style="height: 45px; margin-top: 40px;"></div><span class="bot-t">-7°</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- केवल यही स्क्रिप्ट टैग सबसे नीचे रहेगा -->
+    <script src="script.js"></script>
+</body>
+</html>
