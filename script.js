@@ -1,12 +1,12 @@
-// 🔑 लाइव सैटेलाइट डेटा की वर्किंग चाबी (API Key)
+// 🔑 लाइव सैटेलाइट डेटा की एक्टिवेटेड चाबी
 const API_KEY = "84931a742095368a5c4e97669d0d3de3"; 
 
-// 🔊 असली अलार्म सायरन साउंड का सही इंटरनेट लिंक
+// 🔊 अलार्म सायरन साउंड (सुरक्षित HTTPS लिंक)
 const alarmSound = new Audio("https://google.com");
 
 let searchHistory = [];
 
-// मोबाइल अलर्ट ऑन बटन
+// मोबाइल अलर्ट बटन
 document.getElementById('enable-notif-btn').addEventListener('click', () => {
     if ('Notification' in window) {
         Notification.requestPermission().then(permission => {
@@ -17,14 +17,14 @@ document.getElementById('enable-notif-btn').addEventListener('click', () => {
     }
 });
 
-// सर्च बटन क्लिक करने पर (यह सीधे सैटेलाइट सर्वर से असली डेटा लाएगा)
+// सर्च बटन क्लिक करने पर
 document.getElementById('search-btn').addEventListener('click', () => {
     const cityInput = document.getElementById('city-input').value.trim();
     if (cityInput === "") return;
     fetchLiveWeatherData(cityInput);
 });
 
-// 📍 GPS लाइव लोकेशन बटन (असली डिवाइस का GPS लोकेशन)
+// 📍 GPS लाइव लोकेशन बटन
 document.getElementById('gps-btn').addEventListener('click', () => {
     if (navigator.geolocation) {
         document.getElementById('city-name').innerText = "TRACKING SATELLITE...";
@@ -33,6 +33,7 @@ document.getElementById('gps-btn').addEventListener('click', () => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             
+            // ✅ यहाँ http को बदलकर https किया गया है
             const url = "https://openweathermap.org" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
             
             fetch(url)
@@ -49,8 +50,9 @@ document.getElementById('gps-btn').addEventListener('click', () => {
     }
 });
 
-// इंटरनेट सर्वर से किसी भी शहर का लाइव डेटा खींचने का फंक्शन
+// लाइव डेटा फ़ेच करने का फंक्शन
 function fetchLiveWeatherData(city) {
+    // ✅ यहाँ भी http को बदलकर https किया गया है ताकि गिटहब ब्लॉक न करे
     const url = "https://openweathermap.org" + city + "&appid=" + API_KEY + "&units=metric";
     
     fetch(url)
@@ -82,23 +84,23 @@ function renderHistory() {
         const tag = document.createElement('span');
         tag.className = 'history-tag';
         tag.innerText = city;
-        tag.addEventListener('click', () => fetchLiveWeatherData(city)); // दोबारा क्लिक करने पर लाइव सर्च
+        tag.addEventListener('click', () => fetchLiveWeatherData(city));
         container.appendChild(tag);
     });
 }
 
-// 🖼️ मौसम के हिसाब से बैकग्राउंड की असली फोटो बदलने का फंक्शन
+// 🖼️ मौसम के हिसाब से लाइव बैकग्राउंड बदलना
 function changeAppBackground(condition) {
-    let bgUrl = "https://unsplash.com"; // डिफॉल्ट तूफानी
+    let bgUrl = "https://unsplash.com";
 
     if (condition.includes('clear')) {
-        bgUrl = "https://unsplash.com"; // धूप
+        bgUrl = "https://unsplash.com";
     } else if (condition.includes('cloud')) {
-        bgUrl = "https://unsplash.com"; // बादल
+        bgUrl = "https://unsplash.com";
     } else if (condition.includes('rain') || condition.includes('thunder')) {
-        bgUrl = "https://unsplash.com"; // बारिश
+        bgUrl = "https://unsplash.com";
     } else if (condition.includes('snow')) {
-        bgUrl = "https://unsplash.com"; // बर्फ
+        bgUrl = "https://unsplash.com";
     }
     document.body.style.backgroundImage = "url('" + bgUrl + "')";
 }
@@ -112,19 +114,16 @@ function getWeatherIcon(condition) {
     return '🌫️';
 }
 
-// लाइव डेटा को स्क्रीन पर सेट करने और आटोमेटिक आपदा चेक करने का इंजन
 function updateAppUI(data) {
     alarmSound.pause();
     alarmSound.currentTime = 0;
 
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
-    const condition = data.weather[0].main.toLowerCase(); // ओपनवेदर का एरे फिक्स किया
+    const condition = data.weather[0].main.toLowerCase(); // फिक्स किया गया एरे इंडेक्स
     const weatherDesc = data.weather[0].description;
     const windSpeed = Math.round(data.wind.speed * 3.6);
     const humidity = data.main.humidity;
-    
-    // लाइव बारिश मापना
     const rainEstimate = data.rain ? (data.rain['1h'] || data.rain['3h'] || 0) * 10 : 0;
 
     document.getElementById('city-name').innerText = cityName.toUpperCase() + ", " + data.sys.country;
@@ -142,20 +141,17 @@ function updateAppUI(data) {
     let landslideRisk = "None";
     let floodRisk = "Safe";
 
-    // 1. लाइव आंधी-तूफान अलर्ट
     if (windSpeed > 50) {
         alertTitle = "💨 HIGH WIND EMERGENCY";
         alertDesc = `Dangerous gale winds at ${windSpeed} km/h detected in ${cityName}! Secure property and stay indoors.`;
     }
     
-    // 2. लाइव बाढ़ अलर्ट
     if (rainEstimate > 30 || condition.includes('thunderstorm')) {
         floodRisk = "⚠️ CRITICAL DANGER";
         alertTitle = "🌊 FLOOD EMERGENCY WARNING";
         alertDesc = `Extreme rainfall and flood risk active in ${cityName}! Avoid low-lying areas.`;
     }
 
-    // 3. पहाड़ी इलाके में लाइव लैंडस्लाइड अलर्ट
     const hillyRegions = ["shimla", "manali", "dehradun", "srinagar", "leh", "darjeeling", "guwahati"];
     if (hillyRegions.includes(cityName.toLowerCase()) && (rainEstimate > 10 || condition.includes('rain'))) {
         landslideRisk = "🚨 HIGH RISK";
