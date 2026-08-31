@@ -33,7 +33,6 @@ document.getElementById('gps-btn').addEventListener('click', () => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             
-            // ✅ यहाँ लिंक को बिल्कुल फिक्स और साफ कर दिया गया है
             const url = "https://openweathermap.org" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
             
             fetch(url)
@@ -52,7 +51,6 @@ document.getElementById('gps-btn').addEventListener('click', () => {
 
 // लाइव डेटा फ़ेच करने का फंक्शन
 function fetchLiveWeatherData(city) {
-    // ✅ यहाँ भी लिंक को पूरी तरह से फिक्स कर दिया गया है ताकि कुछ चिपके नहीं
     const url = "https://openweathermap.org" + city + "&appid=" + API_KEY + "&units=metric";
     
     fetch(url)
@@ -121,7 +119,7 @@ function updateAppUI(data) {
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
     
-    // ✅ एरे इंडेक्स को पूरी तरह सही किया गया है
+    // ✅ यहाँ सबसे बड़ा और मुख्य सुधार किया गया है: [0] इंडेक्स जोड़ा गया है
     const condition = data.weather[0].main.toLowerCase(); 
     const weatherDesc = data.weather[0].description;
     
