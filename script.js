@@ -33,7 +33,7 @@ document.getElementById('gps-btn').addEventListener('click', () => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             
-            // ✅ यहाँ http को बदलकर https किया गया है
+            // ✅ बिल्कुल साफ और सुरक्षित HTTPS यूआरएल फॉर्मेट
             const url = "https://openweathermap.org" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
             
             fetch(url)
@@ -52,7 +52,7 @@ document.getElementById('gps-btn').addEventListener('click', () => {
 
 // लाइव डेटा फ़ेच करने का फंक्शन
 function fetchLiveWeatherData(city) {
-    // ✅ यहाँ भी http को बदलकर https किया गया है ताकि गिटहब ब्लॉक न करे
+    // ✅ बिल्कुल साफ और सुरक्षित HTTPS यूआरएल फॉर्मेट
     const url = "https://openweathermap.org" + city + "&appid=" + API_KEY + "&units=metric";
     
     fetch(url)
@@ -120,7 +120,7 @@ function updateAppUI(data) {
 
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
-    const condition = data.weather[0].main.toLowerCase(); // फिक्स किया गया एरे इंडेक्स
+    const condition = data.weather[0].main.toLowerCase(); // लाइव कंडीशन निकाली
     const weatherDesc = data.weather[0].description;
     const windSpeed = Math.round(data.wind.speed * 3.6);
     const humidity = data.main.humidity;
