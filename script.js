@@ -1,13 +1,12 @@
-// 🔑 लाइव सैटेलाइट डेटा की एक्टिवेटेड चाबी
-const API_KEY = "a8fdadd8c940ac96fe4ba5fc2990a784";
-
+// 🔑 आपकी एक्टिवेटेड और वर्किंग पर्सनल चाबी
+const API_KEY = "a8fdadd8c940ac96fe4ba5fc2990a784"; 
 
 // 🔊 अलार्म सायरन साउंड (सुरक्षित HTTPS लिंक)
 const alarmSound = new Audio("https://google.com");
 
 let searchHistory = [];
 
-// मोबाइल अलर्ट बटन
+// मोबाइल अलर्ट ऑन बटन
 document.getElementById('enable-notif-btn').addEventListener('click', () => {
     if ('Notification' in window) {
         Notification.requestPermission().then(permission => {
@@ -34,6 +33,7 @@ document.getElementById('gps-btn').addEventListener('click', () => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             
+            // ✅ बिल्कुल सटीक और शुद्ध URL लिंक
             const url = "https://openweathermap.org" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
             
             fetch(url)
@@ -47,11 +47,14 @@ document.getElementById('gps-btn').addEventListener('click', () => {
             alert("GPS Access Denied. Please enable location.");
             document.getElementById('city-name').innerText = "SELECT A CITY";
         });
+    } else {
+        alert("GPS not supported on this browser.");
     }
 });
 
 // लाइव डेटा फ़ेच करने का फंक्शन
 function fetchLiveWeatherData(city) {
+    // ✅ बिल्कुल सटीक और शुद्ध सर्च URL लिंक
     const url = "https://openweathermap.org" + city + "&appid=" + API_KEY + "&units=metric";
     
     fetch(url)
@@ -96,7 +99,7 @@ function changeAppBackground(condition) {
         bgUrl = "https://unsplash.com";
     } else if (condition.includes('cloud')) {
         bgUrl = "https://unsplash.com";
-    } else if (condition.includes('rain') || condition.includes('thunder')) {
+    } else if (condition.includes('rain') || condition.includes('drizzle') || condition.includes('thunder')) {
         bgUrl = "https://unsplash.com";
     } else if (condition.includes('snow')) {
         bgUrl = "https://unsplash.com";
@@ -104,15 +107,17 @@ function changeAppBackground(condition) {
     document.body.style.backgroundImage = "url('" + bgUrl + "')";
 }
 
+// लाइव आइकॉन सेलेक्टर
 function getWeatherIcon(condition) {
     if (condition.includes('cloud')) return '☁️';
-    if (condition.includes('rain')) return '🌧️';
+    if (condition.includes('rain') || condition.includes('drizzle')) return '🌧️';
     if (condition.includes('clear')) return '☀️';
     if (condition.includes('snow')) return '❄️';
     if (condition.includes('thunder')) return '⛈️';
-    return '🌫️';
+    return '烟 🌫️';
 }
 
+// UI और आपदा चेतावनियाँ अपडेट करना
 function updateAppUI(data) {
     alarmSound.pause();
     alarmSound.currentTime = 0;
@@ -120,7 +125,7 @@ function updateAppUI(data) {
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
     
-    // ✅ यहाँ सबसे बड़ा सुधार किया गया है: weather[0] को एरे फॉर्मेट में सही पढ़ा गया है
+    // ✅ यहाँ एरे फॉर्मेट को पूरी तरह सही कर दिया गया है
     const condition = data.weather[0].main.toLowerCase(); 
     const weatherDesc = data.weather[0].description;
     
@@ -128,7 +133,6 @@ function updateAppUI(data) {
     const humidity = data.main.humidity;
     const rainEstimate = data.rain ? (data.rain['1h'] || data.rain['3h'] || 0) * 10 : 0;
 
-    // ✅ शहर और देश को जोड़ने का तरीका फिक्स किया गया
     document.getElementById('city-name').innerText = cityName.toUpperCase() + ", " + data.sys.country;
     document.getElementById('temperature').innerText = temp;
     document.getElementById('weather-condition').innerText = weatherDesc;
@@ -171,7 +175,7 @@ function updateAppUI(data) {
         document.getElementById('alert-title').innerText = alertTitle;
         document.getElementById('alert-desc').innerText = alertDesc;
 
-        alarmSound.play().catch(e => console.log("Click on screen first to enable alarm."));
+        alarmSound.play().catch(e => console.log("Sound play required interaction."));
 
         if (Notification.permission === 'granted') {
             new Notification(alertTitle, { body: alertDesc });
