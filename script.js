@@ -1,5 +1,6 @@
 // 🔑 लाइव सैटेलाइट डेटा की एक्टिवेटेड चाबी
-const API_KEY = "84931a742095368a5c4e97669d0d3de3"; 
+const API_KEY = "a8fdadd8c940ac96fe4ba5fc2990a784";
+
 
 // 🔊 अलार्म सायरन साउंड (सुरक्षित HTTPS लिंक)
 const alarmSound = new Audio("https://google.com");
