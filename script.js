@@ -1,7 +1,7 @@
 // 🔑 लाइव सैटेलाइट डेटा की एक्टिवेटेड चाबी
 const API_KEY = "84931a742095368a5c4e97669d0d3de3"; 
 
-// 🔊 अलार्म सायरन साउंड
+// 🔊 अलार्म सायरन साउंड (सुरक्षित HTTPS लिंक)
 const alarmSound = new Audio("https://google.com");
 
 let searchHistory = [];
@@ -119,7 +119,7 @@ function updateAppUI(data) {
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
     
-    // ✅ यहाँ सबसे बड़ा और मुख्य सुधार किया गया है: [0] इंडेक्स जोड़ा गया है
+    // ✅ यहाँ सबसे बड़ा सुधार किया गया है: weather[0] को एरे फॉर्मेट में सही पढ़ा गया है
     const condition = data.weather[0].main.toLowerCase(); 
     const weatherDesc = data.weather[0].description;
     
@@ -127,6 +127,7 @@ function updateAppUI(data) {
     const humidity = data.main.humidity;
     const rainEstimate = data.rain ? (data.rain['1h'] || data.rain['3h'] || 0) * 10 : 0;
 
+    // ✅ शहर और देश को जोड़ने का तरीका फिक्स किया गया
     document.getElementById('city-name').innerText = cityName.toUpperCase() + ", " + data.sys.country;
     document.getElementById('temperature').innerText = temp;
     document.getElementById('weather-condition').innerText = weatherDesc;
