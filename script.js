@@ -56,7 +56,7 @@ document.getElementById('gps-btn').addEventListener('click', () => {
 function fetchLiveWeatherData(city) {
     // ✅ बिल्कुल सटीक और शुद्ध सर्च URL लिंक
     const url = "https://openweathermap.org" + city + "&appid=" + API_KEY + "&units=metric";
-    
+
     fetch(url)
         .then(res => { if (!res.ok) throw new Error(); return res.json(); })
         .then(data => {
