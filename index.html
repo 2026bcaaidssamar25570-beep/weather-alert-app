@@ -43,12 +43,14 @@
                 <p id="alert-desc">Alert details</p>
             </div>
         </div>
+        <button id="share-alert-btn" class="share-btn hidden">📤 Share This Alert</button>
 
         <!-- मुख्य मौसम और लाइव आइकॉन -->
         <div class="main-weather">
             <div id="weather-icon-box" class="weather-icon">🌙</div>
             <div class="temp-display"><span id="temperature">--</span>°C</div>
             <p id="weather-condition">Clear Sky</p>
+            <p class="feels-like">Feels like <span id="feels-like">--</span>°C</p>
         </div>
 
         <!-- अतिरिक्त जानकारी -->
@@ -56,8 +58,17 @@
             <div class="detail-row"><span>Humidity</span> <span id="humidity">0%</span></div>
             <div class="detail-row"><span>Chance of rain</span> <span id="rain">0%</span></div>
             <div class="detail-row"><span>Wind Speed</span> <span id="wind">0 km/h</span></div>
+            <div class="detail-row"><span>Air Quality (AQI)</span> <span id="aqi" class="risk-text">--</span></div>
             <div class="detail-row"><span>Landslide Risk</span> <span id="landslide" class="risk-text">None</span></div>
             <div class="detail-row"><span>Flood Risk</span> <span id="flood" class="risk-text">Safe</span></div>
+            <div class="detail-row"><span>Sunrise</span> <span id="sunrise">--</span></div>
+            <div class="detail-row"><span>Sunset</span> <span id="sunset">--</span></div>
+        </div>
+
+        <!-- ⏰ 24-घंटे का पूर्वानुमान -->
+        <div class="hourly-section">
+            <p class="history-title">⏰ Next 24 Hours:</p>
+            <div class="hourly-scroll" id="hourly-scroll"></div>
         </div>
 
         <!-- 7-दिनों का लाइव फोरकास्ट ग्राफ (JS से भरा जाएगा) -->
@@ -71,6 +82,13 @@
         <div class="alert-history hidden" id="alert-history-box">
             <p class="history-title">📋 Recent Alerts:</p>
             <div id="alert-history-list"></div>
+        </div>
+
+        <!-- 📊 टेम्परेचर हिस्ट्री टॉगल -->
+        <button id="toggle-history-btn" class="notif-btn">📊 Show Temperature History</button>
+        <div class="temp-history hidden" id="temp-history-box">
+            <p class="history-title">📊 Temperature History (this city):</p>
+            <div class="graph-container" id="temp-history-graph"></div>
         </div>
     </div>
 
