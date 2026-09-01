@@ -39,10 +39,10 @@ body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     color: var(--text-color);
     position: relative;
-    padding: 20px;
+    padding: 0;
     transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
 }
 
@@ -61,12 +61,13 @@ body::before {
     background: var(--card-bg);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
-    padding: 25px;
-    border-radius: 30px;
+    padding: 20px 16px 40px;
+    border-radius: 0;
     width: 100%;
-    max-width: 410px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--border-color-soft);
+    max-width: 100%;
+    min-height: 100vh;
+    box-shadow: none;
+    border: none;
     transition: background 0.4s ease-in-out;
 }
 
@@ -97,7 +98,6 @@ body::before {
 input { flex: 1; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); color: var(--text-color); outline: none; }
 button#search-btn { padding: 10px 15px; border: none; border-radius: 10px; background: var(--text-color); color: var(--bg-color); font-weight: 600; cursor: pointer; }
 
-/* ⏱️ सर्च हिस्ट्री स्टाइल */
 .recent-searches { text-align: left; margin-bottom: 20px; display: none; }
 .history-title { font-size: 0.75rem; color: var(--secondary-text); margin-bottom: 6px; }
 .history-tags { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -112,7 +112,6 @@ button#search-btn { padding: 10px 15px; border: none; border-radius: 10px; backg
 }
 .history-tag:hover { background: var(--border-color); }
 
-/* अलर्ट बैनर स्टाइल */
 .alert-box {
     background: rgba(239, 68, 68, 0.25);
     color: #fca5a5;
@@ -153,7 +152,6 @@ button#search-btn { padding: 10px 15px; border: none; border-radius: 10px; backg
 .detail-row:last-child { border-bottom: none; }
 .detail-row span:last-child { color: var(--text-color); font-weight: 500; }
 
-/* ⏰ hourly forecast स्टाइल */
 .hourly-section { margin-bottom: 20px; text-align: left; }
 .hourly-scroll {
     display: flex;
@@ -187,7 +185,6 @@ button#search-btn { padding: 10px 15px; border: none; border-radius: 10px; backg
 .top-t { top: -15px; color: var(--text-color); }
 .bot-t { bottom: -5px; }
 
-/* 📋 अलर्ट हिस्ट्री स्टाइल */
 .alert-history { text-align: left; margin-top: 5px; margin-bottom: 15px; border-top: 1px solid var(--border-color); padding-top: 15px; }
 .alert-history-item {
     background: var(--detail-bg);
@@ -202,5 +199,54 @@ button#search-btn { padding: 10px 15px; border: none; border-radius: 10px; backg
 }
 .alert-history-item span:first-child { color: var(--text-color); }
 
-/* 📊 temperature history स्टाइल */
 .temp-history { margin-top: 15px; text-align: left; }
+
+/* ============ Tablet aur upar: card look wapas ============ */
+@media (min-width: 700px) {
+    body {
+        align-items: center;
+        padding: 30px;
+    }
+    .app-container {
+        border-radius: 30px;
+        min-height: auto;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--border-color-soft);
+        padding: 25px;
+        max-width: 460px;
+    }
+}
+
+/* ============ Laptop/Desktop: pura website-jaisa wide dashboard ============ */
+@media (min-width: 1024px) {
+    .app-container {
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        grid-template-areas:
+            "header  header"
+            "search  search"
+            "main    hourly"
+            "main    forecast"
+            "history history";
+        gap: 20px 30px;
+    }
+
+    .app-header       { grid-area: header; margin-bottom: 0; }
+    .notif-btn        { grid-column: 1 / -1; }
+    .search-box       { grid-area: search; margin-bottom: 0; }
+    .recent-searches  { grid-area: search; margin-top: 55px; margin-bottom: 0; }
+    #disaster-alert,
+    #share-alert-btn  { grid-column: 1 / -1; }
+
+    .main-weather,
+    .details-list     { grid-area: main; }
+    .details-list     { margin-bottom: 0; }
+
+    .hourly-section   { grid-area: hourly; margin-bottom: 0; }
+    .forecast-section { grid-area: forecast; border-top: none; padding-top: 0; margin-bottom: 0; }
+
+    .alert-history,
+    #toggle-history-btn,
+    .temp-history     { grid-area: history; }
+}
