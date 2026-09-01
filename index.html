@@ -12,7 +12,10 @@
         <div class="app-header">
             <span class="menu-icon">☰</span>
             <h2 id="city-name">SELECT A CITY</h2>
-            <span class="location-icon" id="gps-btn" style="cursor: pointer;" title="Get Current Location">📍</span>
+            <div class="header-icons">
+                <span class="theme-icon" id="theme-toggle" style="cursor: pointer;" title="Toggle Theme">🌗</span>
+                <span class="location-icon" id="gps-btn" style="cursor: pointer;" title="Get Current Location">📍</span>
+            </div>
         </div>
 
         <!-- मोबाइल अलर्ट बटन -->
@@ -57,23 +60,17 @@
             <div class="detail-row"><span>Flood Risk</span> <span id="flood" class="risk-text">Safe</span></div>
         </div>
 
-        <!-- 7-दिनों का फोरकास्ट ग्राफ -->
+        <!-- 7-दिनों का लाइव फोरकास्ट ग्राफ (JS से भरा जाएगा) -->
         <div class="forecast-section">
-            <div class="forecast-days-header">
-                <span>FRI</span><span>SAT</span><span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span>
-            </div>
-            <div class="forecast-icons-header">
-                <span>🌙</span><span>❄️</span><span>☁️</span><span>☁️</span><span>⛅</span><span>☁️</span><span>🌧️</span>
-            </div>
-            <div class="graph-container">
-                <div class="bar-wrapper"><span class="top-t">3°</span><div class="bar" style="height: 50px; margin-top: 20px;"></div><span class="bot-t">0°</span></div>
-                <div class="bar-wrapper"><span class="top-t">2°</span><div class="bar" style="height: 40px; margin-top: 30px;"></div><span class="bot-t">0°</span></div>
-                <div class="bar-wrapper"><span class="top-t">4°</span><div class="bar" style="height: 65px; margin-top: 10px;"></div><span class="bot-t">-1°</span></div>
-                <div class="bar-wrapper"><span class="top-t">3°</span><div class="bar" style="height: 55px; margin-top: 15px;"></div><span class="bot-t">-2°</span></div>
-                <div class="bar-wrapper"><span class="top-t">5°</span><div class="bar" style="height: 80px; margin-top: 0px;"></div><span class="bot-t">-2°</span></div>
-                <div class="bar-wrapper"><span class="top-t">-3°</span><div class="bar" style="height: 30px; margin-top: 50px; background: linear-gradient(to bottom, #50a7ff, #1e3c72);"></div><span class="bot-t">-7°</span></div>
-                <div class="bar-wrapper"><span class="top-t">1°</span><div class="bar" style="height: 45px; margin-top: 40px;"></div><span class="bot-t">-7°</span></div>
-            </div>
+            <div class="forecast-days-header" id="forecast-days"></div>
+            <div class="forecast-icons-header" id="forecast-icons"></div>
+            <div class="graph-container" id="forecast-graph"></div>
+        </div>
+
+        <!-- 🕒 अलर्ट हिस्ट्री -->
+        <div class="alert-history hidden" id="alert-history-box">
+            <p class="history-title">📋 Recent Alerts:</p>
+            <div id="alert-history-list"></div>
         </div>
     </div>
 
