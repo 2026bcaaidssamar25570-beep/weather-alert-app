@@ -1,3 +1,29 @@
+:root {
+    --bg-color: #0d1117;
+    --overlay-color: rgba(0, 0, 0, 0.65);
+    --card-bg: rgba(13, 17, 23, 0.85);
+    --text-color: #ffffff;
+    --secondary-text: #8899a6;
+    --input-bg: rgba(0, 0, 0, 0.4);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-color-soft: rgba(255, 255, 255, 0.05);
+    --detail-bg: rgba(255, 255, 255, 0.02);
+    --history-tag-bg: rgba(255, 255, 255, 0.08);
+}
+
+body.light-theme {
+    --bg-color: #eef1f5;
+    --overlay-color: rgba(255, 255, 255, 0.3);
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --text-color: #0d1117;
+    --secondary-text: #555b66;
+    --input-bg: rgba(0, 0, 0, 0.05);
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-color-soft: rgba(0, 0, 0, 0.06);
+    --detail-bg: rgba(0, 0, 0, 0.02);
+    --history-tag-bg: rgba(0, 0, 0, 0.06);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +32,7 @@
 }
 
 body {
-    background: #0d1117;
+    background: var(--bg-color);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -14,32 +40,34 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
+    color: var(--text-color);
     position: relative;
     padding: 20px;
-    transition: background 0.8s ease-in-out;
+    transition: background 0.4s ease-in-out, color 0.4s ease-in-out;
 }
 
 body::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.65);
+    background: var(--overlay-color);
     z-index: 1;
+    transition: background 0.4s ease-in-out;
 }
 
 .app-container {
     position: relative;
     z-index: 2;
-    background: rgba(13, 17, 23, 0.85);
+    background: var(--card-bg);
     backdrop-filter: blur(25px);
     -webkit-backdrop-filter: blur(25px);
     padding: 25px;
     border-radius: 30px;
     width: 100%;
     max-width: 410px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color-soft);
+    transition: background 0.4s ease-in-out;
 }
 
 .app-header {
@@ -50,38 +78,39 @@ body::before {
 }
 
 .app-header h2 { font-size: 1.1rem; font-weight: 400; letter-spacing: 1px; }
-.menu-icon, .location-icon { font-size: 1.2rem; opacity: 0.8; }
+.menu-icon, .location-icon, .theme-icon { font-size: 1.2rem; opacity: 0.8; }
+.header-icons { display: flex; align-items: center; gap: 12px; }
 
 .notif-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
     width: 100%;
     padding: 10px;
     border-radius: 12px;
-    color: #fff;
+    color: var(--text-color);
     font-size: 0.8rem;
     margin-bottom: 15px;
     cursor: pointer;
 }
 
 .search-box { display: flex; gap: 8px; margin-bottom: 12px; }
-input { flex: 1; padding: 10px 15px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; background: rgba(0, 0, 0, 0.4); color: white; outline: none; }
-button#search-btn { padding: 10px 15px; border: none; border-radius: 10px; background: #ffffff; color: #000; font-weight: 600; cursor: pointer; }
+input { flex: 1; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); color: var(--text-color); outline: none; }
+button#search-btn { padding: 10px 15px; border: none; border-radius: 10px; background: var(--text-color); color: var(--bg-color); font-weight: 600; cursor: pointer; }
 
 /* ⏱️ सर्च हिस्ट्री स्टाइल */
 .recent-searches { text-align: left; margin-bottom: 20px; display: none; }
-.history-title { font-size: 0.75rem; color: #8899a6; margin-bottom: 6px; }
+.history-title { font-size: 0.75rem; color: var(--secondary-text); margin-bottom: 6px; }
 .history-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .history-tag {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--history-tag-bg);
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.75rem;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color-soft);
     transition: 0.2s;
 }
-.history-tag:hover { background: rgba(255, 255, 255, 0.2); }
+.history-tag:hover { background: var(--border-color); }
 
 /* अलर्ट बैनर स्टाइल */
 .alert-box {
@@ -104,21 +133,36 @@ button#search-btn { padding: 10px 15px; border: none; border-radius: 10px; backg
 .main-weather { margin: 15px 0; text-align: center; }
 .weather-icon { font-size: 4.5rem; margin-bottom: 5px; }
 .temp-display { font-size: 4.5rem; font-weight: 200; }
-#weather-condition { color: #8899a6; font-size: 0.95rem; text-transform: capitalize; }
+#weather-condition { color: var(--secondary-text); font-size: 0.95rem; text-transform: capitalize; }
 
-.details-list { background: rgba(255, 255, 255, 0.02); padding: 12px 15px; border-radius: 16px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.03); }
-.detail-row { display: flex; justify-content: space-between; padding: 7px 0; font-size: 0.85rem; color: #8899a6; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+.details-list { background: var(--detail-bg); padding: 12px 15px; border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--border-color-soft); }
+.detail-row { display: flex; justify-content: space-between; padding: 7px 0; font-size: 0.85rem; color: var(--secondary-text); border-bottom: 1px solid var(--border-color-soft); }
 .detail-row:last-child { border-bottom: none; }
-.detail-row span:last-child { color: #fff; font-weight: 500; }
+.detail-row span:last-child { color: var(--text-color); font-weight: 500; }
 
-.forecast-section { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 15px; }
-.forecast-days-header, .forecast-icons-header { display: flex; justify-content: space-between; font-size: 0.75rem; color: #8899a6; text-align: center; }
-.forecast-icons-header { font-size: 1rem; margin-top: 5px; color: #fff; }
+.forecast-section { border-top: 1px solid var(--border-color); padding-top: 15px; }
+.forecast-days-header, .forecast-icons-header { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--secondary-text); text-align: center; }
+.forecast-icons-header { font-size: 1rem; margin-top: 5px; color: var(--text-color); }
 .forecast-days-header span, .forecast-icons-header span { width: 40px; }
 
 .graph-container { display: flex; justify-content: space-between; height: 130px; margin-top: 15px; }
 .bar-wrapper { display: flex; flex-direction: column; align-items: center; width: 40px; height: 100%; position: relative; }
 .bar { width: 6px; background: linear-gradient(to bottom, #00d2ff, #3a7bd5); border-radius: 10px; }
-.top-t, .bot-t { font-size: 0.7rem; color: #8899a6; position: absolute; }
-.top-t { top: -15px; color: #fff; }
+.top-t, .bot-t { font-size: 0.7rem; color: var(--secondary-text); position: absolute; }
+.top-t { top: -15px; color: var(--text-color); }
 .bot-t { bottom: -5px; }
+
+/* 📋 अलर्ट हिस्ट्री स्टाइल */
+.alert-history { text-align: left; margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px; }
+.alert-history-item {
+    background: var(--detail-bg);
+    border: 1px solid var(--border-color-soft);
+    border-radius: 10px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    font-size: 0.78rem;
+    display: flex;
+    justify-content: space-between;
+    color: var(--secondary-text);
+}
+.alert-history-item span:first-child { color: var(--text-color); }
