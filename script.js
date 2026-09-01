@@ -13,7 +13,7 @@ document.getElementById('search-btn').addEventListener('click', () => {
     fetchLiveWeatherData(cityInput);
 });
 
-// लाइव डेटा फ़ेच करने का फंक्शन (दुनिया के हर शहर के लिए)
+// लाइव डेटा फ़ेच करने का फंक्शन (शहर के नाम से)
 function fetchLiveWeatherData(city) {
     const url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + API_KEY + "&units=metric";
 
@@ -106,3 +106,43 @@ function updateAppUI(data) {
         alertBox.classList.add('hidden');
     }
 }
+
+// 📍 GPS Location Button
+document.getElementById('gps-btn').addEventListener('click', () => {
+    if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser.");
+        return;
+    }
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            fetchWeatherByCoords(lat, lon);
+        },
+        () => {
+            alert("Unable to get your location. Please allow location access.");
+        }
+    );
+});
+
+// निर्देशांक (lat/lon) से लाइव डेटा फ़ेच करना
+function fetchWeatherByCoords(lat, lon) {
+    const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
+
+    fetch(url)
+        .then(res => { if (!res.ok) throw new Error(); return res.json(); })
+        .then(data => {
+            updateAppUI(data);
+            addToHistory(data.name);
+        })
+        .catch(() => alert("Could not fetch weather for your location."));
+}
+
+// 🔔 Turn On Mobile Alerts Button
+document.getElementById('enable-notif-btn').addEventListener('click', () => {
+    if (!("Notification" in window)) {
+        alert("This browser does not support notifications.");
+        return;
+    }
+    Notification.requestPermission().then((permission) => {
+        if (permission ===
