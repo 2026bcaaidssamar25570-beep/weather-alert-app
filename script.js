@@ -33,7 +33,6 @@ document.getElementById('gps-btn').addEventListener('click', () => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             
-            // ✅ बिल्कुल सही और फिक्स किया हुआ GPS URL (स्ट्रिंग प्लस फॉर्मेट)
             const url = "https://openweathermap.org" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
             
             fetch(url)
@@ -54,7 +53,6 @@ document.getElementById('gps-btn').addEventListener('click', () => {
 
 // लाइव डेटा फ़ेच करने का फंक्शन
 function fetchLiveWeatherData(city) {
-    // ✅ यहाँ लिंक को पूरी तरह से फिक्स कर दिया गया है ताकि कुछ भी आपस में न चिपके
     const url = "https://openweathermap.org" + city + "&appid=" + API_KEY + "&units=metric";
     
     fetch(url)
@@ -107,6 +105,7 @@ function changeAppBackground(condition) {
     document.body.style.backgroundImage = "url('" + bgUrl + "')";
 }
 
+// लाइव आइकॉन सेलेक्टर
 function getWeatherIcon(condition) {
     if (condition.includes('cloud')) return '☁️';
     if (condition.includes('rain') || condition.includes('drizzle')) return '🌧️';
@@ -116,6 +115,7 @@ function getWeatherIcon(condition) {
     return '🌫️';
 }
 
+// UI और आपदा चेतावनियाँ अपडेट करना
 function updateAppUI(data) {
     alarmSound.pause();
     alarmSound.currentTime = 0;
@@ -123,7 +123,7 @@ function updateAppUI(data) {
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
     
-    // ✅ सुरक्षित तरीका: मौसम डेटा को एरे इंडेक्स फॉर्मेट में पढ़ना
+    // ✅ यहाँ सबसे बड़ा और मुख्य सुधार किया गया है: [0] इंडेक्स जोड़ा गया है
     let condition = "clear";
     let weatherDesc = "clear sky";
     if (data.weather && data.weather.length > 0) {
