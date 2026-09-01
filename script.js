@@ -1,4 +1,4 @@
-// 🔑 आपकी एक्टिवेटेड और वर्किंग पर्सनल चाबी
+// 🔑 लाइव सैटेलाइट डेटा की एक्टिवेटेड चाबी
 const API_KEY = "a8fdadd8c940ac96fe4ba5fc2990a784"; 
 
 // 🔊 अलार्म सायरन साउंड (सुरक्षित HTTPS लिंक)
@@ -123,7 +123,7 @@ function updateAppUI(data) {
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
     
-    // ✅ यहाँ सबसे बड़ा और मुख्य सुधार किया गया है: [0] इंडेक्स जोड़ा गया है
+    // ✅ 100% सही तरीका: [0] इंडेक्स जोड़कर एरे फॉर्मेट को फिक्स किया गया है
     const condition = data.weather[0].main.toLowerCase(); 
     const weatherDesc = data.weather[0].description;
     
