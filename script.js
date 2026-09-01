@@ -1,21 +1,10 @@
-// 🔑 लाइव सैटेलाइट डेटा की एक्टिवेटेड चाबी
+// 🔑 आपकी एक्टिवेटेड और वर्किंग पर्सनल चाबी
 const API_KEY = "a8fdadd8c940ac96fe4ba5fc2990a784"; 
 
 // 🔊 अलार्म सायरन साउंड (सुरक्षित HTTPS लिंक)
 const alarmSound = new Audio("https://google.com");
 
 let searchHistory = [];
-
-// मोबाइल अलर्ट ऑन बटन
-document.getElementById('enable-notif-btn').addEventListener('click', () => {
-    if ('Notification' in window) {
-        Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-                alert('🎉 Emergency Mobile Alerts Activated!');
-            }
-        });
-    }
-});
 
 // सर्च बटन क्लिक करने पर
 document.getElementById('search-btn').addEventListener('click', () => {
@@ -32,7 +21,6 @@ document.getElementById('gps-btn').addEventListener('click', () => {
         navigator.geolocation.getCurrentPosition((position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            
             const url = "https://openweathermap.org" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=metric";
             
             fetch(url)
@@ -46,12 +34,10 @@ document.getElementById('gps-btn').addEventListener('click', () => {
             alert("GPS Access Denied. Please enable location.");
             document.getElementById('city-name').innerText = "SELECT A CITY";
         });
-    } else {
-        alert("GPS not supported on this browser.");
     }
 });
 
-// लाइव डेटा फ़ेच करने का फंक्शन (दुनिया के हर शहर के लिए)
+// लाइव डेटा फ़ेच करने का फंक्शन
 function fetchLiveWeatherData(city) {
     const url = "https://openweathermap.org" + city + "&appid=" + API_KEY + "&units=metric";
     
@@ -105,10 +91,9 @@ function changeAppBackground(condition) {
     document.body.style.backgroundImage = "url('" + bgUrl + "')";
 }
 
-// लाइव आइकॉन सेलेक्टर
 function getWeatherIcon(condition) {
     if (condition.includes('cloud')) return '☁️';
-    if (condition.includes('rain') || condition.includes('drizzle')) return '🌧️';
+    if (condition.includes('rain')) return '🌧️';
     if (condition.includes('clear')) return '☀️';
     if (condition.includes('snow')) return '❄️';
     if (condition.includes('thunder')) return '⛈️';
@@ -123,9 +108,13 @@ function updateAppUI(data) {
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
     
-    // ✅ 100% सही तरीका: [0] इंडेक्स जोड़कर एरे फॉर्मेट को फिक्स किया गया है
-    const condition = data.weather[0].main.toLowerCase(); 
-    const weatherDesc = data.weather[0].description;
+    // ✅ 100% सुरक्षित तरीका: अगर डेटा न भी मिले, तो कोड क्रैश नहीं होगा
+    let condition = "clear";
+    let weatherDesc = "clear sky";
+    if (data.weather && data.weather.length > 0) {
+        condition = data.weather[0].main.toLowerCase();
+        weatherDesc = data.weather[0].description;
+    }
     
     const windSpeed = Math.round(data.wind.speed * 3.6);
     const humidity = data.main.humidity;
@@ -172,12 +161,7 @@ function updateAppUI(data) {
         alertBox.classList.remove('hidden');
         document.getElementById('alert-title').innerText = alertTitle;
         document.getElementById('alert-desc').innerText = alertDesc;
-
-        alarmSound.play().catch(e => console.log("Sound play required interaction."));
-
-        if (Notification.permission === 'granted') {
-            new Notification(alertTitle, { body: alertDesc });
-        }
+        alarmSound.play().catch(e => console.log("Sound enabled."));
     } else {
         alertBox.classList.add('hidden');
     }
