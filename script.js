@@ -24,7 +24,7 @@ document.getElementById('search-btn').addEventListener('click', () => {
     fetchLiveWeatherData(cityInput);
 });
 
-// 📍 GPS लाइव लोकेशन बटन (यह आपकी असली करंट लोकेशन ढूंढ कर मौसम दिखाएगा)
+// 📍 GPS लाइव लोकेशन बटन
 document.getElementById('gps-btn').addEventListener('click', () => {
     if (navigator.geolocation) {
         document.getElementById('city-name').innerText = "TRACKING SATELLITE...";
@@ -51,7 +51,7 @@ document.getElementById('gps-btn').addEventListener('click', () => {
     }
 });
 
-// लाइव डेटा फ़ेच करने का फंक्शन (यह दुनिया के हर शहर को खोजेगा)
+// लाइव डेटा फ़ेच करने का फंक्शन (दुनिया के हर शहर के लिए)
 function fetchLiveWeatherData(city) {
     const url = "https://openweathermap.org" + city + "&appid=" + API_KEY + "&units=metric";
     
@@ -61,7 +61,7 @@ function fetchLiveWeatherData(city) {
             updateAppUI(data);
             addToHistory(city); 
         })
-        .catch(() => alert("City not found! Please check the spelling (e.g., Dausa, Jaipur)."));
+        .catch(() => alert("City not found! Please check the spelling (e.g., Dausa, Mumbai)."));
 }
 
 // ⏱️ सर्च हिस्ट्री मैनेजमेंट
@@ -123,7 +123,7 @@ function updateAppUI(data) {
     const cityName = data.name;
     const temp = Math.round(data.main.temp);
     
-    // ✅ ओपेनवेदर डेटा फॉर्मेट बिल्कुल सही तरीके से पढ़ना
+    // ✅ यहाँ सबसे बड़ा और मुख्य सुधार किया गया है: [0] इंडेक्स जोड़ा गया है
     const condition = data.weather[0].main.toLowerCase(); 
     const weatherDesc = data.weather[0].description;
     
@@ -157,8 +157,7 @@ function updateAppUI(data) {
         alertDesc = `Extreme rainfall and flood risk active in ${cityName}! Avoid low-lying areas.`;
     }
 
-    // पहाड़ी इलाका चेक करने के लिए लिस्ट
-    const hillyRegions = ["shimla", "manali", "dehradun", "srinagar", "leh", "darjeeling", "guwahati", "dausa"]; // दौसा को समतल इलाके के रूप में रिस्क से अलग रख सकते हैं
+    const hillyRegions = ["shimla", "manali", "dehradun", "srinagar", "leh", "darjeeling", "guwahati"];
     if (hillyRegions.includes(cityName.toLowerCase()) && (rainEstimate > 10 || condition.includes('rain'))) {
         landslideRisk = "🚨 HIGH RISK";
         alertTitle = "⛰️ LANDSLIDE DISASTER ALERT";
